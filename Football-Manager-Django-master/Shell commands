@@ -1,0 +1,9 @@
+#Create a club
+
+Club.objects.create(name="FC Barcelona",budget=210000000,rating=86, league="La Liga")
+Club.objects.create(name="Real Madrid CF",budget=210000000,rating=86, league="La Liga")
+Club.objects.create(name="LOSC Lille",budget=50000000,rating=75, league="Ligue 1")
+
+#Create a Player
+
+Player.objects.create(first_name="Jan",last_name="Goes",age=19,position="RW",price=75000000,contract_length=36,rating=78,country="Brazil",team=Club.objects.get(name="Atletico Madrid"))

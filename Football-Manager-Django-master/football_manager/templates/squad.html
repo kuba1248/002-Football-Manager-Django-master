@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squad - {{team.name}}</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Football Manager</h1>
+            <a id="edit_acc" href="/edit_account">Edit My Account</a>
+            <a id="logout" href="/logout">Logout</a>
+            <a href="/manager_center">Back</a>
+        </div>
+        <div id="club_title">
+            <h1>SQUAD</h1>
+            <h3>{{team.name}}   {{team.id}}</h3>
+        </div>
+        <div id="squad_table">
+            <table>
+                <tr>
+                    <th>Country</th>
+                    <th>Pos</th>
+                    <th>Overall</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Value</th>
+                    <th>Contract</th>
+                </tr>
+                {% for player in club_players %}
+                    <tr>
+                        <td>{{player.country}}</td>
+                        <td>{{player.position}}</td>
+                        <td>{{player.rating}}</td>
+                        <td>{{player.first_name}} {{player.last_name}}</td>
+                        <td>{{player.age}}</td>
+                        <td>{{player.price}}</td>
+                        <td>{{player.contract_length}} mon</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

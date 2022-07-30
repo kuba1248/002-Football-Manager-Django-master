@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Football Manager</h1>
+            <a id="logout" href="/logout">Logout</a>
+            <a href="/transfer_hub">Back</a>
+        </div>
+        <div id="club_title">
+            <h1>RESULTS</h1>
+            <h4>{{search_results|length}} Players</h4>
+        </div>
+        <div id="results">
+            {% for player in search_results %}
+            <div class="player">
+                <div id="photo_overall">
+                    <img src="/images/player_default.jpeg" alt=player_default_picture>
+                    <h5>OVR</h5>
+                    <h3>{{player.rating}}</h3>
+                </div>
+                <div id="name_details">
+                    <h4>{{player.first_name}} {{player.last_name}}</h4>
+                    <h5>Age {{player.age}}</h5>
+                    <h5>{{player.position}}</h5>
+                    <p>{{player.country}} / {{player.team.name}}</p>
+                    <!-- dynamically dividing price by 1000000 -->
+                    <p>Market Value {% widthratio player.price 1000000 1 %}m</p> 
+                </div>
+                <div id="club_logo">
+                    <img src="/images/player_default.jpeg" alt=club_logo>
+                </div>
+                <form action="/approach_to_buy" method="POST">
+                    {% csrf_token %}
+                    <input type="number" name="offered_price" value="{{player.price}}">
+                    <input type="hidden" name="player_id" value="{{player.id}}">
+                    <button type="submit">Approach to Buy</button>
+                </form>
+                <!-- {% if messages %}
+                    <ul style="color: red; list-style-type: none;">
+                    {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %} -->
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

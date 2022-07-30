@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Offers</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Football Manager</h1>
+            <a id="logout" href="/logout">Logout</a>
+            <a href="/manager_center">Back</a>
+        </div>
+        <div id="club_title">
+            <h1>MY OFFERS</h1>
+            <!-- <h4>{{search_results|length}} Players</h4> -->
+        </div>
+        <div id="selling_offers">
+            <h2>Selling Offers</h2>
+            {% if selling_offers|length == 0 %}
+                <h3>No Offers</h3>
+            {% endif %}
+            {% for offer in selling_offers %}
+                {% if not offer.approved %}
+                <div class="offer">
+                    <div id="photo_overall">
+                        <img src="/images/player_default.jpeg" alt=player_default_picture>
+                        <h5>OVR</h5>
+                        <h3>{{player.rating}}</h3>
+                    </div>
+                    <div id="name_details">
+                        <h4>{{offer.player.first_name}} {{offer.player.last_name}}</h4>
+                        <h5>From {{offer.buyer_club.name}}</h5>
+                        <h5>Age {{offer.player.age}}</h5>
+                        <h5>Pos {{offer.player.position}}</h5>
+                        <p>Contract {{offer.player.contract_length}} months</p>
+                        <!-- dynamically dividing price by 1000000 -->
+                        <p>Market Value {% widthratio offer.player.price 1000000 1 %}m</p>
+                        <p>Offered Price {{offer.price}}</p> 
+                    </div>
+                    <div id="decision">
+                        <form action="/approve" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="transfer_id" value="{{offer.id}}">
+                            <button type="submit">Approve</button>
+                        </form>
+                        <form action="/deny" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="transfer_id" value="{{offer.id}}">
+                            <button type="submit">Deny</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div id="buying_offers">
+            <h2>Buying Offers</h2>
+            {% if buying_offers|length == 0 %}
+                <h3>No Offers</h3>
+            {% endif %}
+            {% for offer in buying_offers %}
+                <div class="offer">
+                    <div id="photo_overall">
+                        <img src="/images/player_default.jpeg" alt=player_default_picture>
+                        <h5>OVR</h5>
+                        <h3>{{player.rating}}</h3>
+                    </div>
+                    <div id="name_details">
+                        <h4>{{offer.player.first_name}} {{offer.player.last_name}}</h4>
+                        <h5>Age {{offer.player.age}}</h5>
+                        <h5>Pos {{offer.player.position}}</h5>
+                        <p>Contract {{offer.player.contract_length}} months</p>
+                        <!-- dynamically dividing price by 1000000 -->
+                        <p>Market Value {% widthratio offer.player.price 1000000 1 %}m</p>
+                        <p>Offered Price {{offer.price}}</p> 
+                    </div>
+                    <div id="decision">
+                        {% if offer.approved %}
+                            <h3>Offer Accepted</h3>
+                        {% elif not offer.completed %}
+                            <h3>Pending Review</h3>
+                        {% else %}
+                            <h3>Offer Rejected</h3>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

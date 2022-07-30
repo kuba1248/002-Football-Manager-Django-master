@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Hub - {{team.name}}</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Football Manager</h1>
+            <a id="edit_acc" href="/edit_account">Edit My Account</a>
+            <a id="logout" href="/logout">Logout</a>
+            <a href="/manager_center">Back</a>
+        </div>
+        <div id="club_title">
+            <h1>TRANSFER HUB</h1>
+            <h3>{{team.name}}</h3>
+        </div>
+        <div id="transfers_container">
+            {% for transfer in club_transfers %}
+            <div class="each_transfer">
+                 <div id="player_name_pic">
+                     <img src="/images/player_default.jpeg" alt=player_default_picture>
+                     {{transfer.player_first_name}} {{transfer.player_last_name}}
+                 </div>
+                 <div id="transfer_details">
+                     <p>{{transfer.updated_at}}</p>
+                     <h4>{{transfer.seller_club_name}}</h4>
+                     <img src="/images/Green_Arrow_Right.png" alt="Sold_To">
+                     <h4>{{transfer.buyer_club_name}}</h4>
+                     {% if transfer.transaction == "Loan" %}
+                        <p>On Loan</p>
+                        <!-- <p>Duration</p> -->
+                    {% else %}
+                        <p>Fee ${{transfer.price}}m</p>
+                        <!-- <p>Duration</p> -->
+                        <!-- <p>Market Value</p> -->
+                    {% endif %}
+                 </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="seach_player">
+            <h2>SEARCH PLAYERS</h2>
+            <div class="search_player_sub_div">
+                <h4>By Name</h4>
+                <form action="/search_player_name" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="name">
+                    <button type="submit">SEARCH</button>
+                </form>
+            </div>
+            <div class="search_player_sub_div">
+                <h4>By Position or Age</h4>
+                <form action="/search_player_position_age" method="POST">
+                    {% csrf_token %}
+                    <label for="position">Position</label>
+                    <select name="position">
+                        <option value="Goalkeeper">Goalkeeper</option>
+                        <option value="Defender">Defender</option>
+                        <option value="Midfielder">Midfielder</option>
+                        <option value="Attacker">Attacker</option>
+                    </select>
+                    <label for="min_age">Min Age</label>
+                    <input type="number" name="min_age">
+                    <button type="submit">SEARCH</button>
+                </form>
+            </div>
+            <div class="search_player_sub_div">
+                <h4>By Club</h4>
+                <form action="/search_player_club" method="POST">
+                    {% csrf_token %}
+                    <select name="club">
+                        {% for club in all_clubs %}
+                            <option value="{{club.id}}">{{club.name}}</option>
+                        {% endfor %}
+                    </select>                    
+                    <button type="submit">SEARCH</button>
+                </form>
+            </div>
+            {% if messages %}
+            <ul style="color: red; list-style-type: none;">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

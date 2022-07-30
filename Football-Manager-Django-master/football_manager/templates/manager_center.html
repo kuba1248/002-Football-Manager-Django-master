@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{team.name}} - Manager Center</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Football Manager</h1>
+            <a id="edit_acc" href="/edit_account">Edit My Account</a>
+            <a id="logout" href="/logout">Logout</a>
+            <a href="/home">Transfer Updates Home</a>
+        </div>
+        <div id="club_title">
+            <h2>{{team.name}}  {{team.rating}}</h2>
+            <h4>Manager Center</h4>
+            <div id="budget_circle">
+                <h2>Budget</h2>
+                <h1>${{budget}}m</h1>
+            </div>
+        </div>
+        <div id="links_container">
+            <div class="links_boxes" id="squad">
+                <a href="/squad">SQUAD</a>
+            </div>
+            <!-- <div class="links_boxes" id="field">
+                <a href="/field">FIELD</a> -->
+            </div>
+            <div class="links_boxes" id="transfer_histrory">
+                <a href="/transfer_hub">TRANSFER HUB</a>
+            </div>
+            <div class="links_boxes" id="offers">
+                <a href="/offers">OFFERS</a>
+            </div>
+            <div class="links_boxes" id="leave_job">
+                <form action="/leave_job" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">LEAVE JOB</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

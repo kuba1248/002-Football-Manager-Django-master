@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates - Football Manager</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Football Manager</h1>
+            <h3>Welcome {{request.session.user_name}} !</h3>
+            <a id="edit_acc" href="/edit_account">Edit My Account</a>
+            <a id="logout" href="/logout">Logout</a>
+        </div>
+        <div id="transfer_updates">
+            <h2>Live Transfer Updates</h2>
+            {% for transfer in all_transfers %}
+            <div class="each_transfer">
+                <div id="player_name_pic">
+                    <img src="/images/player_default.jpeg" alt=player_default_picture>
+                    {{transfer.player_first_name}} {{transfer.player_last_name}}
+                </div>
+                <div id="transfer_details">
+                    <p>{{transfer.updated_at}}</p>
+                    <h4>{{transfer.seller_club_name}}</h4>
+                    <img src="/images/Green_Arrow_Right.png" alt="Sold_To">
+                    <h4>{{transfer.buyer_club_name}}</h4>
+                    {% if transfer.transaction == "Loan" %}
+                       <p>On Loan</p>
+                       <!-- <p>Duration</p> -->
+                   {% else %}
+                       <p>Fee ${{transfer.price}}m</p>
+                       <!-- <p>Duration</p> -->
+                       <!-- <p>Market Value</p> -->
+                   {% endif %}
+                </div>
+           </div>
+            {% endfor %}
+            <div id="right_panel">
+                <div class="right_panel_elements">
+                    <h2><a href="/manager_center">Manager Center</a></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

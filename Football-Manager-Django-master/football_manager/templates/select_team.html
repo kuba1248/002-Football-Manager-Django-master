@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Team</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Football Manager</h1>
+            <h3>Select a team</h3>
+            <a id="edit_acc" href="/edit_account">Edit My Account</a>
+            <a id="logout" href="/logout">Logout</a>
+        </div>
+        <!-- Implement a form to list teams by country/league -->
+        <div id="search_team">
+            <form action="/search_team" method="POST">
+                {% csrf_token %}
+                <!-- <label for="league_name">League</label>
+                <select name="league_name">
+                    {% for league in all_leagues %}
+                        <option value="{{league}}">{{league}}</option>
+                    {% endfor %} -->
+                <label for="team_name">Available Teams </label>
+                <select name="team_name">
+                    {% for team in all_teams %}
+                    <option value="{{team.name}}">{{team.name}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">SELECT</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit My Account - Football Manager</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Football Manager</h1>
+            <h3>Edit My Account</h3>
+            <a id="back" href="/quotes">Back</a>
+            <a id="logout" href="/logout">Logout</a>
+        </div>
+        <div id="update_form">
+            <form action="/update_user" method="POST">
+                {% csrf_token %}
+                <label for="firstname">First Name </label><input type="text" name="firstname" value="{{this_user.first_name}}"><br>
+                <label for="lastname">Last Name </label><input type="text" name="lastname" value="{{this_user.last_name}}"><br>
+                <label for="email">Email </label><input type="text" name="email" value="{{this_user.email}}"><br>
+                <button type="submit">Update</button>
+            </form>
+        </div>
+        <div id="error_messages">
+            {% if messages %}
+            <ul style="color: red; list-style-type: none;">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

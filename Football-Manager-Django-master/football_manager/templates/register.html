@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Manager - Register</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static '/css/style_1.css' %}"> -->
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    <div id="wrapper">
+        <h1>Football Manager</h1>
+        <div class="reg_login_div">
+            <h3>Create an account</h3>
+            <form action="/register" method="POST">
+                {% csrf_token %}
+                <label for="firstname">First Name: </label><input type="text" name="firstname"><br>
+                <label for="lastname">Last Name: </label><input type="text" name="lastname"><br>
+                <label for="email">Email: </label><input type="text" name="email"><br>
+                <label for="password">Password: </label><input type="password" name="password"><br>
+                <label for="password_conf">Confirm Password: </label><input type="password" name="password_conf"><br><br>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        <p>Already have an account? <a href="/view_login">Login here</a></p>
+        <div id="error_messages">
+            {% if messages %}
+            <ul style="color: red; list-style-type: none;">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <button class="mdc-button foo-button">
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label">Button</span>
+        </button>
+</body>
+</html>
